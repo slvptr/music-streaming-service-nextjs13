@@ -1,0 +1,25 @@
+@import "styles/variables.scss";
+
+.page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.formWrapper {
+  background: $darker-color;
+  width: 80%;
+  padding: 10%;
+  border-radius: 8px;
+}
+
+.formSubmitButton {
+  margin-top: 5%;
+}

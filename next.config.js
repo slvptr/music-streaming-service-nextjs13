@@ -2,6 +2,11 @@
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
-}
 
-module.exports = nextConfig
+  experimental: { appDir: true },
+  images: {
+    domains: ["avatars.yandex.net"],
+  },
+};
+
+module.exports = nextConfig;

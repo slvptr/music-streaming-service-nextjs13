@@ -1,0 +1,46 @@
+@import "styles/variables";
+
+.trackCard {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  background-color: $dark-color;
+  border-radius: 10px;
+}
+
+.cover {
+  border-bottom-left-radius: 10px;
+  border-top-left-radius: 10px;
+}
+
+.overviewContainer {
+  display: flex;
+  align-items: center;
+}
+
+.descriptionContainer {
+  display: flex;
+  flex-direction: column;
+  margin-left: 1rem;
+}
+
+.title {
+  font-size: 12px;
+}
+
+.artist {
+  font-size: 10px;
+  font-weight: 200;
+}
+
+.iconsContainer {
+  display: flex;
+  justify-self: flex-end;
+}
+
+.icon {
+  display: flex;
+  align-items: center;
+  aspect-ratio: 1 / 1;
+}

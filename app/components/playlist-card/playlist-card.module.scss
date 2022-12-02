@@ -1,0 +1,19 @@
+.playlistCard {
+  display: flex;
+  flex-direction: column;
+  width: 140px;
+}
+
+.coverImage {
+  border-radius: 10px;
+  margin-bottom: 4px;
+}
+
+.title {
+  font-size: 12px;
+}
+
+.description {
+  font-size: 10px;
+  font-weight: 200;
+}

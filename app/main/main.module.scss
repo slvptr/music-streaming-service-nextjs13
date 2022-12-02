@@ -1,0 +1,53 @@
+@import "styles/variables";
+
+.controlSection {
+  height: 12vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  padding: 0.5rem 1rem 0 1rem;
+}
+
+.topBlock {
+  display: flex;
+  justify-content: space-between;
+}
+
+.searchInput {
+  width: 100%;
+}
+
+.profileButton {
+  width: 50px;
+  aspect-ratio: 1 / 1;
+  margin-right: 0.5rem;
+}
+
+.navBlock {
+  display: flex;
+  justify-content: space-between;
+
+  background-color: $dark-color;
+  border-radius: 10px;
+  padding: 6px;
+  margin-top: 0.5rem;
+
+  a {
+    min-width: 21%;
+  }
+
+  button {
+    font-weight: 500;
+  }
+}
+
+.navButton {
+  width: 100%;
+  background-color: $darker-color;
+}
+
+.activeButton {
+  background-color: $main-color;
+  transition: background-color 0.15s linear;
+}

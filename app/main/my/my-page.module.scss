@@ -1,0 +1,28 @@
+@import "styles/variables";
+
+.pageContainer {
+  padding-left: 1rem;
+  padding-right: 1rem;
+
+  max-height: 80vh;
+  overflow: auto;
+}
+
+.cardContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  justify-items: center;
+  row-gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.addCover {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 140px;
+  aspect-ratio: 1 / 1;
+  background-color: $dark-color;
+  border-radius: 10px;
+  margin-bottom: 4px;
+}

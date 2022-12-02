@@ -1,0 +1,26 @@
+@import "styles/variables";
+
+.wrapper {
+  display: flex;
+  align-items: center;
+  background-color: $dark-color;
+  padding: 12px;
+  border-radius: 10px;
+}
+
+.input {
+  width: 100%;
+  background-color: $dark-color;
+  border: none;
+  color: $primary-font-color;
+  font-size: 14px;
+
+  &:focus {
+    outline: none;
+  }
+
+  &::placeholder {
+    font-weight: 200;
+    color: $secondary-font-color;
+  }
+}

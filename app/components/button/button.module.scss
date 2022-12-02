@@ -1,0 +1,10 @@
+@import "styles/variables";
+
+.button {
+  background-color: $dark-color;
+  color: $primary-font-color;
+  font-size: 14px;
+  padding: 6px 15px 6px 15px;
+  border: none;
+  border-radius: 10px;
+}
