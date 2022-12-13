@@ -1,10 +1,12 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { Track } from "../../models/media";
+import { Playlist, Track } from "../../../models/media";
 
 export default function handler(
   req: NextApiRequest,
   res: NextApiResponse<Track[]>
 ) {
+  const { id } = req.query;
+
   const data: Track[] = [
     {
       title: "Окно Овертона",

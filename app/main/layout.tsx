@@ -9,7 +9,7 @@ import classNames from "classnames";
 import { SearchInput } from "../components/search-input";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
-import { signIn, useSession } from "next-auth/react";
+import { signIn, signOut, useSession } from "next-auth/react";
 
 const MainLayout = ({ children }: { children: React.ReactNode }) => {
   const { data, status } = useSession();
@@ -21,7 +21,7 @@ const MainLayout = ({ children }: { children: React.ReactNode }) => {
     <section>
       <section className={styles.controlSection}>
         <div className={styles.topBlock}>
-          <Button className={styles.profileButton}>
+          <Button className={styles.profileButton} onClick={() => signOut()}>
             <FontAwesomeIcon icon={faUser} />
           </Button>
           <SearchInput className={styles.searchInput} />

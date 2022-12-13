@@ -1,8 +1,9 @@
 import { PlaylistCard } from "../../components/playlist-card";
-import { Playlist } from "../../../pages/api/playlists";
+import { Playlist } from "../../../models/media";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import styles from "./my-page.module.scss";
+import mainStyles from "../main.module.scss";
 
 const getData = async (): Promise<Playlist[]> => {
   const res = await fetch("http://localhost:3000/api/playlists");
@@ -13,7 +14,7 @@ const Page = async () => {
   const playlists: Playlist[] = await getData();
 
   return (
-    <div className={styles.pageContainer}>
+    <div className={mainStyles.pageContainer}>
       <div className={styles.cardContainer}>
         <PlaylistCard
           title="Создать плейлист"

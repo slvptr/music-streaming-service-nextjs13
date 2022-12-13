@@ -1,7 +1,15 @@
 @import "styles/variables";
 
+.pageContainer {
+  padding-right: 1rem;
+  padding-left: 1rem;
+
+  max-height: 79.5vh;
+  overflow: auto;
+}
+
 .controlSection {
-  height: 12vh;
+  height: 12.5vh;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -31,7 +39,6 @@
   background-color: $dark-color;
   border-radius: 10px;
   padding: 6px;
-  margin-top: 0.5rem;
 
   a {
     min-width: 21%;

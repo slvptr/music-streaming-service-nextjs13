@@ -1,11 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-
-export type Playlist = {
-  title: string;
-  description: string;
-  coverUrl: string;
-  playlistId: string;
-};
+import { Playlist } from "../../models/media";
 
 export default function handler(
   req: NextApiRequest,

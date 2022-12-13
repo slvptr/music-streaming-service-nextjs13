@@ -1,8 +1,8 @@
+import styles from "./sign-in.module.scss";
+import { Input } from "../../app/components/input";
+import { Button } from "../../app/components/button";
 import { getCsrfToken } from "next-auth/react";
 import { GetServerSideProps, NextPage } from "next";
-import styles from "./sign-in.module.scss";
-import { Input } from "../components/input";
-import { Button } from "../components/button";
 
 type SignInPageProps = {
   csrfToken: string;
@@ -27,16 +27,13 @@ const SignIn: NextPage<SignInPageProps> = ({ csrfToken }) => {
           <h1>Вход</h1>
           <input name="csrfToken" type="hidden" defaultValue={csrfToken} />
           <Input
+            className={styles.formInput}
             type="email"
             id="email"
             name="email"
             placeholder="email@example.com"
           />
-          <Button
-            type="submit"
-            className={styles.formSubmitButton}
-            variant="primary"
-          >
+          <Button type="submit" className={styles.formSubmitButton}>
             Войти через Email
           </Button>
         </form>

@@ -1,7 +1,6 @@
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
-  shadowDatabaseUrl = env("SHADOW_DATABASE_URL") // Only needed when using a cloud provider that doesn't support the creation of new databases, like Heroku. Learn more: https://pris.ly/migrate-shadow
 }
 
 generator client {
@@ -21,6 +20,7 @@ model User {
   email         String?   @unique
   emailVerified DateTime?
   sessions      Session[]
+  playlists     Playlist[]
 }
 
 model VerificationToken {
@@ -30,3 +30,48 @@ model VerificationToken {
 
   @@unique([identifier, token])
 }
+
+model Playlist {
+    id          String  @id @default(cuid())
+    title       String
+    description String
+    coverUrl    String
+    userId      String
+    user        User    @relation(fields: [userId], references: [id])
+    tracks      TracksOnPlaylists[]
+}
+
+model Track {
+    id          String  @id @default(cuid())
+    artists     Artist[]
+    genres      Genre[]
+    coverUrl    String
+    trackUrl    String
+    playlists   TracksOnPlaylists[]
+}
+
+model TracksOnPlaylists {
+    trackId     String
+    track       Track       @relation(fields: [trackId], references: [id])
+    playlistId  String
+    playlist    Playlist    @relation(fields: [playlistId], references: [id])
+    assignedAt  DateTime    @default(now())
+
+    @@id([trackId, playlistId])
+}
+
+model Genre {
+    id          String  @id @default(cuid())
+    name        String
+    trackId     String
+    track       Track   @relation(fields: [trackId], references: [id])
+}
+
+model Artist {
+    id          String  @id @default(cuid())
+    name        String
+    trackId     String
+    track       Track  @relation(fields: [trackId], references: [id])
+}
+
+

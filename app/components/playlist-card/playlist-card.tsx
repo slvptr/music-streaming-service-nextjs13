@@ -29,7 +29,7 @@ export const PlaylistCard = ({
       {coverElement ? (
         coverElement
       ) : (
-        <Link href={`/playlist/${playlistId}`}>
+        <Link href={`/main/playlist/${playlistId}`}>
           <Image
             className={styles.coverImage}
             src={coverUrl}
