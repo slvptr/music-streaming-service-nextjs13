@@ -1,37 +1,93 @@
+"use client";
+
 import mainStyles from "../../main.module.scss";
 import styles from "./playlist-page.module.scss";
 import classNames from "classnames";
 import { TrackCard } from "../../../components/track-card";
-import { Track } from "../../../../models/media";
+import { Playlist, Track } from "../../../../models/media";
+import { cookies } from "next/headers";
+import { Button } from "../../../components/button";
+import Link from "next/link";
+import {
+  deletePlaylist,
+  deleteTrack,
+  getPlaylistInfo,
+  getPlaylistTracks,
+} from "../../../../services/media";
+import { useContext, useEffect, useState } from "react";
+import { AppContext } from "../../../../context/appState";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { TrackControlsBar } from "../../../components/track-controls-bar";
 
-const getData = async (id: string): Promise<Track[]> => {
-  const res = await fetch(`http://localhost:3000/api/playlist/${id}`);
-  return res.json();
-};
+const Page = ({ params }: { params: { id: string } }) => {
+  const router = useRouter();
+  const appContext = useContext(AppContext);
+  const { data: session, status } = useSession();
 
-const Page = async ({ params }: { params: { id: string } }) => {
-  const tracks: Track[] = await getData(params.id);
+  const [tracks, setTracks] = useState<Track[]>([]);
+  useEffect(() => {
+    getPlaylistTracks(params.id, appContext.searchText).then((response) =>
+      setTracks(response)
+    );
+  }, [appContext, params.id]);
+
+  const [playlist, setPlaylist] = useState<Playlist>();
+  useEffect(() => {
+    getPlaylistInfo(params.id).then((response) => setPlaylist(response));
+  }, [params.id]);
+
+  const onDeletePlaylistClick = async () => {
+    await deletePlaylist(params.id);
+    router.push("/main/my");
+  };
+
+  const handleDeleteTrackClick = async (trackId: string) => {
+    await deleteTrack(trackId, params.id);
+    getPlaylistTracks(params.id, appContext.searchText).then((response) =>
+      setTracks(response)
+    );
+  };
+
+  const deletable: boolean =
+    session?.user !== null &&
+    playlist != null &&
+    session?.user?.id === playlist.userId;
 
   return (
     <div className={mainStyles.pageContainer}>
-      <div className={styles.labels}>
-        <span className={styles.label}>Играть</span>
-        <span className={classNames(styles.label, styles.queueLabel)}>
-          В очередь
-        </span>
-        <span className={styles.label}>В плейлист</span>
-      </div>
+      {tracks.length > 0 && deletable && <TrackControlsBar deletable={true} />}
+      {tracks.length > 0 && !deletable && (
+        <TrackControlsBar deletable={false} />
+      )}
       <div className={styles.cardContainer}>
         {tracks.map((track) => (
           <TrackCard
-            key={track.trackUrl}
+            key={track.id}
+            track={track}
+            handleDeleteTrack={handleDeleteTrackClick}
             className={styles.trackCard}
-            title={track.title}
-            artist={track.artist}
-            coverUrl={track.coverUrl}
-            trackUrl={track.trackUrl}
+            deletable={deletable}
           />
         ))}
+        {playlist &&
+          session &&
+          session.user &&
+          session.user.id === playlist.userId && (
+            <div className={styles.buttonsBar}>
+              <Link href={`/main/new-track?playlistId=${params.id}`}>
+                <Button className={styles.addTrackButton}>
+                  Загрузить трек
+                </Button>
+              </Link>
+              <Button
+                className={styles.deletePlaylistButton}
+                onClick={onDeletePlaylistClick}
+              >
+                Удалить плейлист
+              </Button>
+            </div>
+          )}
       </div>
     </div>
   );

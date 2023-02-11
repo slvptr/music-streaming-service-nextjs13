@@ -1,0 +1,26 @@
+.labelsWithDelete, .labelsWithoutDelete {
+  display: flex;
+  height: 3vh;
+}
+
+.labelsWithDelete {
+  justify-content: space-between;
+}
+
+.labelsWithoutDelete {
+  justify-content: flex-end;
+}
+
+.rightLabels {
+  display: flex;
+}
+
+.label {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 9.5px;
+  font-weight: 200;
+  width: 50px;
+}

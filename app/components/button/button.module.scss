@@ -8,3 +8,13 @@
   border: none;
   border-radius: 10px;
 }
+
+.spinner {
+  animation: linear 2s infinite spin;
+
+  @keyframes spin {
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+}

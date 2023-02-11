@@ -1,0 +1,26 @@
+@import "styles/variables";
+
+
+.bar {
+  user-select: none;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.progress {
+  flex: 1;
+  height: 8px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.knob {
+  position: relative;
+  height: 16px;
+  width: 16px;
+  border: 2px solid white;
+  border-radius: 50%;
+  background-color: $main-color;
+}

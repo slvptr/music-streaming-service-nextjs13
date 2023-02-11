@@ -1,11 +1,12 @@
 @import "styles/variables";
 
+
 .trackCard {
   display: flex;
   align-items: center;
   justify-content: space-between;
 
-  background-color: $dark-color;
+  background-color: #393E46FF;
   border-radius: 10px;
 }
 
@@ -39,8 +40,25 @@
   justify-self: flex-end;
 }
 
-.icon {
+.iconWrapper {
   display: flex;
   align-items: center;
   aspect-ratio: 1 / 1;
+}
+
+.coverWithIconWrapper {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  height: 50px;
+}
+
+.deleteIconWrapper {
+  position: absolute;
+  z-index: 2;
+}
+
+
+.coverWithIcon {
+  filter: blur(1px) brightness(40%);
 }

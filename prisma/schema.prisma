@@ -13,6 +13,8 @@ model Session {
   userId       String
   expires      DateTime
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([sessionTokend], type: BTree)
 }
 
 model User {
@@ -21,6 +23,9 @@ model User {
   emailVerified DateTime?
   sessions      Session[]
   playlists     Playlist[]
+  tracks        Track[]
+
+  @@index([email], type: BTree)
 }
 
 model VerificationToken {
@@ -33,21 +38,26 @@ model VerificationToken {
 
 model Playlist {
     id          String  @id @default(cuid())
-    title       String
+    name        String
     description String
     coverUrl    String
+    tracks      TracksOnPlaylists[]
     userId      String
     user        User    @relation(fields: [userId], references: [id])
-    tracks      TracksOnPlaylists[]
+
+    @@index([userId], type: BTree)
 }
 
 model Track {
     id          String  @id @default(cuid())
+    name        String
     artists     Artist[]
     genres      Genre[]
     coverUrl    String
     trackUrl    String
     playlists   TracksOnPlaylists[]
+    userId      String
+    user        User    @relation(fields: [userId], references: [id])
 }
 
 model TracksOnPlaylists {

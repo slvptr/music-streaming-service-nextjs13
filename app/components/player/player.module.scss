@@ -5,5 +5,28 @@
   background-color: $dark-color;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
-  border-top: 2px solid $main-color;
+}
+
+
+
+
+.controlsBar {
+  display: flex;
+  align-items: center;
+  margin-top: 4px;
+}
+
+.controlWrapper {
+  width: 50px;
+  aspect-ratio: 1 / 1;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.titleWrapper {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
 }

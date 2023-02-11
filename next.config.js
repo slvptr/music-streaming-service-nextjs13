@@ -5,7 +5,15 @@ const nextConfig = {
 
   experimental: { appDir: true },
   images: {
-    domains: ["avatars.yandex.net"],
+    domains: ["avatars.yandex.net", "storage.yandexcloud.net"],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "storage.yandexcloud.net",
+        port: "",
+        pathname: "/music-streaming-services/**",
+      },
+    ],
   },
 };
 

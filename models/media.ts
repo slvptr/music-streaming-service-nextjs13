@@ -1,13 +1,25 @@
 export type Playlist = {
-  title: string;
+  name: string;
   description: string;
   coverUrl: string;
-  playlistId: string;
+  id: string;
+  userId: string;
+};
+
+export type Artist = {
+  name: string;
+};
+
+export type Genre = {
+  name: string;
 };
 
 export type Track = {
-  title: string;
-  artist: string;
+  id: string;
+  userId: string;
+  name: string;
+  artists: Artist[];
+  genres: Genre[];
   coverUrl: string;
   trackUrl: string;
 };

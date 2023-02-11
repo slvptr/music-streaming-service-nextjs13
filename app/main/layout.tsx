@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useContext } from "react";
 import { Button } from "../components/button";
 import styles from "./main.module.scss";
 import Link from "next/link";
@@ -10,12 +10,22 @@ import { SearchInput } from "../components/search-input";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { signIn, signOut, useSession } from "next-auth/react";
+import Cookies from "js-cookie";
+import { AppContext } from "../../context/appState";
 
 const MainLayout = ({ children }: { children: React.ReactNode }) => {
-  const { data, status } = useSession();
-  if (status === "unauthenticated") signIn();
+  const appContext = useContext(AppContext);
+  const { data: session, status } = useSession();
 
-  const pathname = usePathname();
+  if (status === "unauthenticated")
+    signIn("email", { callbackUrl: "/main/my" });
+
+  const pathname = usePathname() as string;
+  if (session && session.user) Cookies.set("userId", session?.user.id);
+
+  const onSearchInputChange = (e: any) => {
+    appContext.setSearchText(e.target.value);
+  };
 
   return (
     <section>
@@ -24,7 +34,10 @@ const MainLayout = ({ children }: { children: React.ReactNode }) => {
           <Button className={styles.profileButton} onClick={() => signOut()}>
             <FontAwesomeIcon icon={faUser} />
           </Button>
-          <SearchInput className={styles.searchInput} />
+          <SearchInput
+            className={styles.searchInput}
+            onChange={onSearchInputChange}
+          />
         </div>
         <nav className={styles.navBlock}>
           <Link href={`/main/my`}>
