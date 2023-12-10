@@ -15,7 +15,8 @@
 2. Настроить политики доступа в S3 и осуществлять запись объектов в хранилище по сервисному идентификатору. Отрефакторить схему БД (см. текущую и новую схемы ниже)
 3. Переписать виджет плеера -- заменить хардкод элемент на поп-ап, порефакторить UI форм загрузки -- добавить прогресс бары и т.п.
 
-<p float="left">
-  <img src="/readme/db-scheme-default.png" height=400/>
-  <img src="/readme/db-scheme-refactored.png" height=400/> 
-</p>
+<h5>Текущая схема БД</h5>
+<img src="/readme/db-scheme-default.png" width=700/>
+
+<h5>Новая схема БД</h5>
+<img src="/readme/db-scheme-refactored.png" width=700/> 
