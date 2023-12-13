@@ -25,11 +25,14 @@ const SignUp: NextPage = () => {
       "Content-Type": "application/json",
     });
 
-    const response = await fetch("http://localhost:3000/api/register", {
-      method: "POST",
-      body: JSON.stringify(formData),
-      headers,
-    });
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/register`,
+      {
+        method: "POST",
+        body: JSON.stringify(formData),
+        headers,
+      }
+    );
 
     if (response.ok) {
       setError("");
