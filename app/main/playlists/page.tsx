@@ -12,6 +12,7 @@ const Page = () => {
   const appContext = useContext(AppContext);
 
   const [playlists, setPlaylists] = useState<Playlist[]>([]);
+
   useEffect(() => {
     getGlobalPlaylists(appContext.searchText).then((response) =>
       setPlaylists(response)

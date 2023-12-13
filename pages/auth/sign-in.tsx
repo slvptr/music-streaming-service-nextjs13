@@ -1,40 +1,52 @@
-import styles from "./sign-in.module.scss";
+"use client";
+
+import styles from "./auth.module.scss";
 import { Input } from "../../app/components/input";
 import { Button } from "../../app/components/button";
-import { getCsrfToken } from "next-auth/react";
-import { GetServerSideProps, NextPage } from "next";
+import { signIn } from "next-auth/react";
+import { NextPage } from "next";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 
-type SignInPageProps = {
-  csrfToken: string;
-};
+const SignIn: NextPage = () => {
+  const router = useRouter();
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const csrfToken = await getCsrfToken(context);
-  return {
-    props: { csrfToken },
+  const login = async (e: any) => {
+    e.preventDefault();
+
+    await signIn("credentials", {
+      username: e.target.username.value,
+      password: e.target.password.value,
+      redirect: false,
+    });
+
+    router.push("/main/playlists");
   };
-};
 
-const SignIn: NextPage<SignInPageProps> = ({ csrfToken }) => {
   return (
     <div className={styles.page}>
       <div className={styles.formWrapper}>
-        <form
-          className={styles.form}
-          method="post"
-          action="/api/auth/signin/email"
-        >
+        <form className={styles.form} method="post" onSubmit={login}>
           <h1>Вход</h1>
-          <input name="csrfToken" type="hidden" defaultValue={csrfToken} />
           <Input
             className={styles.formInput}
-            type="email"
-            id="email"
-            name="email"
-            placeholder="email@example.com"
+            type="text"
+            name="username"
+            placeholder="username"
+            required
           />
+          <Input
+            className={styles.formInput}
+            type="password"
+            name="password"
+            placeholder="password"
+            required
+          />
+          <Link href="/auth/sign-up" className={styles.link}>
+            Нет аккаунта? Зарегистрироваться
+          </Link>
           <Button type="submit" className={styles.formSubmitButton}>
-            Войти через Email
+            Войти
           </Button>
         </form>
       </div>

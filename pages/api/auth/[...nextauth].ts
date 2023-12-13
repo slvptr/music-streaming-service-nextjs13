@@ -1,36 +1,69 @@
 import NextAuth from "next-auth";
-import EmailProvider from "next-auth/providers/email";
-import { PrismaClient } from "@prisma/client";
+import CredentialsProvider from "next-auth/providers/credentials";
+import prisma from "../../../prisma/client";
+import bcrypt from "bcrypt";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 
-const prisma = new PrismaClient();
-
+type SessionUser = {
+  id: string;
+  username: string;
+};
 export default NextAuth({
   adapter: PrismaAdapter(prisma),
   providers: [
-    EmailProvider({
-      server: process.env.EMAIL_SERVER,
-      from: process.env.EMAIL_FROM,
+    CredentialsProvider({
+      credentials: {
+        username: { label: "username", type: "text" },
+        password: { label: "password", type: "password" },
+      },
+      async authorize(credentials, req) {
+        if (!credentials?.username || !credentials?.password) {
+          return null;
+        }
+
+        const { username, password } = credentials;
+
+        const user = await prisma.user.findUnique({
+          where: {
+            username,
+          },
+        });
+
+        if (!user) {
+          return null;
+        }
+
+        const matches = await bcrypt.compare(password, user.password);
+        if (!matches) {
+          return null;
+        }
+
+        const sessionUser: SessionUser = {
+          id: user.id,
+          username: user.username,
+        };
+
+        return sessionUser;
+      },
     }),
   ],
   pages: {
     signIn: "/auth/sign-in",
   },
+  session: {
+    strategy: "jwt",
+  },
   callbacks: {
-    session: async ({ session, token }) => {
-      if (session?.user) {
-        session.user.id = token.uid;
-      }
+    async session({ session, token }) {
+      session.user = token.user as SessionUser;
       return session;
     },
-    jwt: async ({ user, token }) => {
+    async jwt({ token, user }) {
       if (user) {
-        token.uid = user.id;
+        token.user = user;
       }
       return token;
     },
   },
-  session: {
-    strategy: "jwt",
-  },
+  secret: process.env.NEXTAUTH_SECRET,
 });
