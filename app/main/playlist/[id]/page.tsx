@@ -56,6 +56,9 @@ const Page = ({ params }: { params: { id: string } }) => {
 
   return (
     <div className={mainStyles.pageContainer}>
+      <div className={styles.playlistName}>{playlist?.name}</div>
+      <div className={styles.playlistDescription}>{playlist?.description}</div>
+
       {tracks.length > 0 && deletable && <TrackControlsBar deletable={true} />}
       {tracks.length > 0 && !deletable && (
         <TrackControlsBar deletable={false} />

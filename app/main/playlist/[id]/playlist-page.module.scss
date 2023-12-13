@@ -31,3 +31,13 @@
 .deletePlaylistButton {
   background-color: $danger-color !important;
 }
+
+.playlistName {
+  margin-top: 0.5rem;
+  font-size: 18px;
+}
+
+.playlistDescription {
+  font-size: 12px;
+  font-weight: 200;
+}

@@ -88,7 +88,7 @@ export const addPlaylist = async ({
     uploadCoverParams.append("path", "playlist-covers");
     uploadCoverParams.append("fileId", coverId);
 
-    await fetch(
+    const response = await fetch(
       `${
         process.env.NEXT_PUBLIC_BASE_URL
       }/api/upload-media?${uploadCoverParams.toString()}`,
@@ -97,6 +97,10 @@ export const addPlaylist = async ({
         body: cover,
       }
     );
+
+    if (!response.ok) {
+      return;
+    }
 
     const uploadInfoParams = new URLSearchParams();
     uploadInfoParams.append("name", name);
