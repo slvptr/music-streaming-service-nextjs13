@@ -1,13 +1,13 @@
 "use client";
 
 import React from "react";
-import "../styles/globals.scss";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import { config } from "@fortawesome/fontawesome-svg-core";
 import styles from "./root.module.scss";
 import { Player } from "./components/player";
 import { SessionProvider } from "next-auth/react";
 import { AppProvider } from "../context/appState";
+import "../styles/globals.scss";
 
 config.autoAddCss = false;
 

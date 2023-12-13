@@ -110,9 +110,6 @@ export const TrackCard = ({
             <FontAwesomeIcon icon={faPlay} width={50} />
           )}
         </div>
-        <div className={styles.iconWrapper}>
-          <FontAwesomeIcon icon={faBars} width={50} />
-        </div>
         <Link href={`/main/add-to-playlist?trackId=${track.id}`}>
           <div className={styles.iconWrapper}>
             <FontAwesomeIcon icon={faPlus} width={50} />

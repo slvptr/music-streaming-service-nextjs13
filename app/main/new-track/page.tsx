@@ -69,6 +69,8 @@ const Page = () => {
             name="genre"
             required
           />
+
+          <span className={styles.label}>Загрузите обложку (.jpg .png)</span>
           <Input
             className={styles.control}
             type="file"
@@ -76,6 +78,8 @@ const Page = () => {
             required
             accept="image/png, image/jpeg"
           />
+
+          <span className={styles.label}>Загрузите трек (.mp3)</span>
           <Input
             className={styles.control}
             type="file"

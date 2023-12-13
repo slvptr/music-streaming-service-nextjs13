@@ -53,6 +53,8 @@ const Page = () => {
             name="description"
             required
           />
+
+          <span className={styles.label}>Загрузите обложку (.jpg .png)</span>
           <Input
             className={styles.control}
             type="file"

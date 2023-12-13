@@ -8,8 +8,6 @@
 }
 
 
-
-
 .controlsBar {
   display: flex;
   align-items: center;
@@ -26,7 +24,8 @@
 }
 
 .titleWrapper {
+  font-size: 14px;
   flex-grow: 1;
   display: flex;
-  justify-content: center;
+  justify-content: left;
 }

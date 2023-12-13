@@ -12,9 +12,6 @@ export const TrackControlsBar = ({ deletable }: TrackControlsBarProps) => {
         <span className={styles.label}>Удалить</span>
         <div className={styles.rightLabels}>
           <span className={styles.label}>Играть</span>
-          <span className={classNames(styles.label, styles.queueLabel)}>
-            В очередь
-          </span>
           <span className={styles.label}>В плейлист</span>
         </div>
       </div>
@@ -23,9 +20,6 @@ export const TrackControlsBar = ({ deletable }: TrackControlsBarProps) => {
   return (
     <div className={styles.labelsWithoutDelete}>
       <span className={styles.label}>Играть</span>
-      <span className={classNames(styles.label, styles.queueLabel)}>
-        В очередь
-      </span>
       <span className={styles.label}>В плейлист</span>
     </div>
   );

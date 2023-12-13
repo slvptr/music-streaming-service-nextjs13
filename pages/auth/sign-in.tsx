@@ -3,6 +3,7 @@
 import styles from "./auth.module.scss";
 import { Input } from "../../app/components/input";
 import { Button } from "../../app/components/button";
+import "../../styles/globals.scss";
 import { signIn } from "next-auth/react";
 import { NextPage } from "next";
 import Link from "next/link";

@@ -24,9 +24,6 @@ const Page = () => {
       {tracks.length > 0 && (
         <div className={styles.labels}>
           <span className={styles.label}>Играть</span>
-          <span className={classNames(styles.label, styles.queueLabel)}>
-            В очередь
-          </span>
           <span className={styles.label}>В плейлист</span>
         </div>
       )}

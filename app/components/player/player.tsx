@@ -26,7 +26,7 @@ export const Player = () => {
 
   const trackTitle = cutText(
     `${appContext.currentTrack.artist} \u2012\ ${appContext.currentTrack.name}`,
-    28
+    40
   );
 
   const onPlayClick = () => {
@@ -72,14 +72,6 @@ export const Player = () => {
               <span>Трек</span>
             )}
           </span>
-        </div>
-        <div
-          className={classNames(styles.controlWrapper, styles.repeatWrapper)}
-        >
-          <FontAwesomeIcon icon={faRepeat} size="xl" />
-        </div>
-        <div className={classNames(styles.controlWrapper, styles.queueWrapper)}>
-          <FontAwesomeIcon icon={faEllipsisVertical} size="2xl" />
         </div>
       </div>
     </section>

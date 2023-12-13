@@ -1,9 +1,16 @@
+@import "styles/variables";
+
 .pageContainer {
   padding-top: 1rem
 }
 
 .title {
+  font-size: 19px;
+}
 
+.label {
+  margin-top: 0.5rem;
+  font-size: 13px;
 }
 
 .controlsContainer {
@@ -16,7 +23,10 @@
 }
 
 .addPlaylistButton {
+  border-color: $main-color !important;
+  background: $main-color !important;
+
   width: 100%;
-  margin-top: 1rem;
-  padding: 14px;
+  margin-top: 2rem;
+  padding: 14px !important;
 }

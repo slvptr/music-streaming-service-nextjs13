@@ -3,6 +3,7 @@
 import { NextPage } from "next";
 import { Input } from "../../app/components/input";
 import { Button } from "../../app/components/button";
+import "../../styles/globals.scss";
 import styles from "./auth.module.scss";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
