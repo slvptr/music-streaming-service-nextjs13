@@ -8,20 +8,31 @@ import { signIn } from "next-auth/react";
 import { NextPage } from "next";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 const SignIn: NextPage = () => {
   const router = useRouter();
 
+  const [error, setError] = useState("");
+
   const login = async (e: any) => {
     e.preventDefault();
 
-    await signIn("credentials", {
+    const response = await signIn("credentials", {
       username: e.target.username.value,
       password: e.target.password.value,
       redirect: false,
     });
-
-    router.push("/main/playlists");
+    console.log(response);
+    if (!response) {
+      return;
+    }
+    if (response.error === null) {
+      router.push("/main/playlists");
+    }
+    if (response.error === "CredentialsSignin") {
+      setError("Invalid credentials");
+    }
   };
 
   return (
@@ -46,6 +57,9 @@ const SignIn: NextPage = () => {
           <Link href="/auth/sign-up" className={styles.link}>
             Нет аккаунта? Зарегистрироваться
           </Link>
+
+          <div className={styles.error}>{error}</div>
+
           <Button type="submit" className={styles.formSubmitButton}>
             Войти
           </Button>
