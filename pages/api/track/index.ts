@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import prisma from "../../../prisma/client";
-import { Track } from "../../../models/media";
+import { ResponseError } from "../../../models/response";
 
 export default async function handler(
   req: NextApiRequest,
@@ -50,7 +50,10 @@ export default async function handler(
 
     res.status(200).end();
   } catch (error) {
-    console.error(error);
-    res.status(500).end();
+    const response: ResponseError = {
+      code: 500,
+      message: error as string,
+    };
+    res.status(500).json(response);
   }
 }

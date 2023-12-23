@@ -1,19 +1,22 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import prisma from "../../../prisma/client";
+import { ResponseError } from "../../../models/response";
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+  if (req.method !== "POST") {
+    return res.status(405).end();
+  }
+
+  const reqName = req.query.name as string;
+  const reqDescription = req.query.description as string;
+  const reqUserId = req.query.userId as string;
+  const reqCoverId = req.query.coverId as string;
+
   try {
-    if (req.method !== "POST") return res.status(405).end();
-
-    const reqName = req.query.name as string;
-    const reqDescription = req.query.description as string;
-    const reqUserId = req.query.userId as string;
-    const reqCoverId = req.query.coverId as string;
-
-    await prisma.playlist.create({
+    const playlist = await prisma.playlist.create({
       data: {
         name: reqName,
         description: reqDescription,
@@ -22,9 +25,12 @@ export default async function handler(
       },
     });
 
-    res.status(200).end();
+    res.status(200).json(playlist);
   } catch (error) {
-    console.error(error);
-    res.status(500).end();
+    const response: ResponseError = {
+      code: 500,
+      message: error as string,
+    };
+    res.status(500).json(response);
   }
 }

@@ -23,7 +23,7 @@ const SignIn: NextPage = () => {
       password: e.target.password.value,
       redirect: false,
     });
-    console.log(response);
+
     if (!response) {
       return;
     }

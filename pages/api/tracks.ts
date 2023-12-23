@@ -8,41 +8,45 @@ export default async function handler(
 ) {
   const pattern = req.query.pattern as string;
 
-  const tracks: Track[] = await prisma.track.findMany({
-    where: {
-      OR: [
-        {
-          name: { contains: pattern, mode: "insensitive" },
-        },
-        {
-          genres: {
-            some: {
-              name: { contains: pattern, mode: "insensitive" },
+  try {
+    const tracks: Track[] = await prisma.track.findMany({
+      where: {
+        OR: [
+          {
+            name: { contains: pattern, mode: "insensitive" },
+          },
+          {
+            genres: {
+              some: {
+                name: { contains: pattern, mode: "insensitive" },
+              },
             },
           },
-        },
-        {
-          artists: {
-            some: {
-              name: { contains: pattern, mode: "insensitive" },
+          {
+            artists: {
+              some: {
+                name: { contains: pattern, mode: "insensitive" },
+              },
             },
           },
+        ],
+      },
+      include: {
+        artists: {
+          select: {
+            name: true,
+          },
         },
-      ],
-    },
-    include: {
-      artists: {
-        select: {
-          name: true,
+        genres: {
+          select: {
+            name: true,
+          },
         },
       },
-      genres: {
-        select: {
-          name: true,
-        },
-      },
-    },
-  });
+    });
 
-  res.status(200).json(tracks);
+    res.status(200).json(tracks);
+  } catch (err) {
+    res.status(500).json([]);
+  }
 }

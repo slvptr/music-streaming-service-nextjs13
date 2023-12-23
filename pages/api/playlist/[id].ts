@@ -1,42 +1,51 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { Playlist, Track } from "../../../models/media";
 import prisma from "../../../prisma/client";
+import { ResponseError } from "../../../models/response";
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<Track[]>
+  res: NextApiResponse<Track[] | Playlist | ResponseError>
 ) {
   if (req.method === "GET") {
     const id = req.query.id as string;
     const pattern = req.query.pattern as string;
 
-    const tracks: Track[] = await prisma.track.findMany({
-      where: {
-        playlists: {
-          some: {
-            playlistId: id,
+    try {
+      const tracks: Track[] = await prisma.track.findMany({
+        where: {
+          playlists: {
+            some: {
+              playlistId: id,
+            },
+          },
+          name: {
+            contains: pattern,
+            mode: "insensitive",
           },
         },
-        name: {
-          contains: pattern,
-          mode: "insensitive",
-        },
-      },
-      include: {
-        artists: {
-          select: {
-            name: true,
+        include: {
+          artists: {
+            select: {
+              name: true,
+            },
+          },
+          genres: {
+            select: {
+              name: true,
+            },
           },
         },
-        genres: {
-          select: {
-            name: true,
-          },
-        },
-      },
-    });
+      });
 
-    res.status(200).json(tracks);
+      res.status(200).json(tracks);
+    } catch (err) {
+      const response: ResponseError = {
+        code: 500,
+        message: err as string,
+      };
+      res.status(500).json(response);
+    }
   }
 
   if (req.method === "DELETE") {
@@ -45,30 +54,35 @@ export default async function handler(
     if (!userId) res.status(403).end();
 
     try {
-      const playlist: Playlist = await prisma.playlist.findUniqueOrThrow({
+      let playlist: Playlist = await prisma.playlist.findUniqueOrThrow({
         where: {
           id: id as string,
         },
       });
-      if (playlist.userId !== userId) throw new Error();
-    } catch (error) {
-      console.log(error);
-      res.status(403).end();
+      if (playlist.id !== userId) {
+        res.status(403).json([]);
+      }
+
+      await prisma.tracksOnPlaylists.deleteMany({
+        where: {
+          playlistId: id as string,
+        },
+      });
+
+      playlist = await prisma.playlist.delete({
+        where: {
+          id: id as string,
+        },
+      });
+
+      res.status(200).json(playlist);
+    } catch (err) {
+      const response: ResponseError = {
+        code: 500,
+        message: err as string,
+      };
+      res.status(500).json(response);
     }
-
-    await prisma.tracksOnPlaylists.deleteMany({
-      where: {
-        playlistId: id as string,
-      },
-    });
-
-    await prisma.playlist.delete({
-      where: {
-        id: id as string,
-      },
-    });
-
-    res.status(200).end();
   }
 
   res.status(405).end();

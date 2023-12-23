@@ -3,7 +3,6 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
 
-  experimental: { appDir: true },
   images: {
     domains: ["avatars.yandex.net", "storage.yandexcloud.net"],
     remotePatterns: [
