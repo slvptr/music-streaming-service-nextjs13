@@ -26,6 +26,9 @@ const Page = () => {
     const genre = e.target.genre.value;
     const cover = e.target.cover.files[0];
     const track = e.target.track.files[0];
+    if (!searchParams) {
+      return;
+    }
     const playlistId = searchParams.get("playlistId");
     if (!playlistId) {
       console.error("playlistId is not defined");

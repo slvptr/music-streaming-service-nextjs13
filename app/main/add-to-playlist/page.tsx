@@ -26,8 +26,13 @@ const Page = () => {
 
   const handleClick = async (playlist: Playlist) => {
     const playlistId = playlist.id;
+    if (!searchParams) {
+      return;
+    }
     const trackId = searchParams.get("trackId");
-    if (!trackId) return;
+    if (!trackId) {
+      return;
+    }
 
     await addTrackToPlaylist({ playlistId: playlistId, trackId: trackId });
   };
