@@ -6,16 +6,18 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Playlist>
 ) {
-  const { id } = req.query;
-  const playlist: Playlist | null = await prisma.playlist.findFirst({
-    where: {
-      id: id as string,
-    },
-  });
-  if (!playlist) {
+  try {
+    const { id } = req.query;
+    const playlist: Playlist | null = await prisma.playlist.findFirst({
+      where: {
+        id: id as string,
+      },
+    });
+    if (playlist) {
+      res.status(200).json(playlist);
+    }
     res.status(400).end();
-    return;
+  } catch (err) {
+    res.status(500).end();
   }
-
-  res.status(200).json(playlist);
 }

@@ -1,6 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import prisma from "../../../prisma/client";
-import { Playlist, Track } from "../../../models/media";
 import { ResponseError } from "../../../models/response";
 
 export default async function handler(
@@ -12,13 +11,7 @@ export default async function handler(
   }
 
   const { id } = req.query;
-
   const playlistId = req.query.playlistId as string;
-  const userId = req.cookies["userId"];
-  if (!userId) {
-    res.status(403).end();
-    return;
-  }
 
   try {
     await prisma.tracksOnPlaylists.delete({

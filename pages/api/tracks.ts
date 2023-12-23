@@ -1,4 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
+import { decode } from "next-auth/jwt";
 import { Track } from "../../models/media";
 import prisma from "../../prisma/client";
 

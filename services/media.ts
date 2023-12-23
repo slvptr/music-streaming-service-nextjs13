@@ -8,6 +8,9 @@ export const getPlaylistTracks = async (
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_BASE_URL}/api/playlist/${id}?pattern=${pattern}`
   );
+  if (res.status !== 200) {
+    return [];
+  }
   return res.json();
 };
 
@@ -22,6 +25,9 @@ export const getGlobalTracks = async (pattern: string): Promise<Track[]> => {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_BASE_URL}/api/tracks?pattern=${pattern}`
   );
+  if (res.status !== 200) {
+    return [];
+  }
   return res.json();
 };
 
@@ -31,6 +37,9 @@ export const getGlobalPlaylists = async (
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_BASE_URL}/api/playlists?pattern=${pattern}`
   );
+  if (res.status !== 200) {
+    return [];
+  }
   return res.json();
 };
 

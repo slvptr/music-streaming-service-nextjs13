@@ -24,11 +24,13 @@ const SignIn: NextPage = () => {
       redirect: false,
     });
 
+    console.log(response);
     if (!response) {
       return;
     }
-    if (response.error === null) {
+    if (response.ok) {
       router.push("/main/playlists");
+      return;
     }
     if (response.error === "CredentialsSignin") {
       setError("Invalid credentials");
