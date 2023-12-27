@@ -1,6 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import prisma from "../../../prisma/client";
 import { ResponseError } from "../../../models/response";
+import { decode } from "next-auth/jwt";
+import { NextResponse } from "next/server";
 
 export default async function handler(
   req: NextApiRequest,
@@ -16,10 +18,16 @@ export default async function handler(
     const reqTrackId = req.query.trackId as string;
     const reqPlaylistId = req.query.playlistId as string;
 
-    const userId = req.cookies["userId"];
-    if (!userId) {
-      res.status(403).end();
-      return;
+    const sessionToken = req.cookies["next-auth.session-token"];
+
+    const jwt = await decode({
+      token: sessionToken,
+      secret: process.env.NEXTAUTH_SECRET as string,
+    });
+
+    // @ts-ignore
+    if (!jwt && !jwt?.user?.id) {
+      return NextResponse.json({ message: "unauthorised" }, { status: 401 });
     }
 
     const trackAssignment = await prisma.track.create({
@@ -37,7 +45,8 @@ export default async function handler(
             name: reqGenre,
           },
         },
-        userId: userId,
+        // @ts-ignore
+        userId: jwt.user.id,
       },
     });
 
